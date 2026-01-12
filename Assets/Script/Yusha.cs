@@ -1,33 +1,20 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine;
 
-public class Yusha : MonoBehaviour
-{
-    [SerializeField, Header("移動速度")]
-    private float _speed;
+//public class CameraFollow : MonoBehaviour
+//{
+//    public Transform target; // 追従するプレイヤーのTransform
+//    public float smoothness = 0.125f; // 追従の滑らかさ（小さいほどゆっくり）
+//    public Vector3 offset = new Vector3(0, 0, -10); // カメラのズーム位置（Z軸は-10固定が基本）
 
-    private Vector2 _inputVelocity;
-    private Rigidbody2D _rigid;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        _inputVelocity = Vector2.zero;
-        _rigid = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        _Move();
-    }
-
-    private void _Move()
-    {
-        _rigid.linearVelocity = _inputVelocity * _speed;
-    }
-
-    private void OnMove(InputAction.CallbackContext context)
-    {
-        _inputVelocity = context.ReadValue<Vector2>();
-    }
-}
+//    void LateUpdate() // カメラの移動は通常のUpdateより後のLateUpdateで行うのが定石
+//    {
+//        if (target != null)
+//        {
+//            // プレイヤーの位置にオフセットを加えた目標地点を計算
+//            Vector3 desiredPosition = target.position + offset;
+//            // 現在地から目標地点へ滑らかに移動させる
+//            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothness);
+//            transform.position = smoothedPosition;
+//        }
+//    }
+//}
