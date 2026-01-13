@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f72198f10b4c9479eec9728a3ace76, type: 3}
+  m_Name: PlayerStatusData
+  m_EditorClassIdentifier: Assembly-CSharp::BattleParameter
+  Data:
+    HP: 300
+    MaxHP: 300
+    Attack: 70
+    Defense: 45
+    Level: 55
+    Exp: 0
+    Money: 9999999
+    AttackWeapon: {fileID: 11400000, guid: 8680c7e26c612c840957ad4508156565, type: 2}
+    DefenseWeapon: {fileID: 0}
+    Items: []

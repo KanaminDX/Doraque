@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f72198f10b4c9479eec9728a3ace76, type: 3}
+  m_Name: Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::BattleParameter
+  Data:
+    HP: 1860
+    MaxHP: 1500
+    Attack: 60
+    Defense: 50
+    Level: 99
+    Exp: 0
+    Money: 0
+    AttackWeapon: {fileID: 0}
+    DefenseWeapon: {fileID: 0}
+    Items: []
