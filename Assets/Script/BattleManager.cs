@@ -1,6 +1,7 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+
 
 public class BattleManager : MonoBehaviour
 {
@@ -8,8 +9,13 @@ public class BattleManager : MonoBehaviour
     public BattleParameter enemyStatus;
     public StatusUIController playerUI;
     public EnemyUIController enemyUI;
+    private AudioSource audioSource;
+    public AudioClip attack;
+    public AudioClip damage;
+    public AudioClip guard;
+    public AudioClip heal;
 
-    [Header("ƒƒO•\¦—pƒeƒLƒXƒg")]
+    [Header("ãƒ­ã‚°è¡¨ç¤ºç”¨ãƒ†ã‚­ã‚¹ãƒˆ")]
     public TextMeshProUGUI logText;
 
     private bool isPlayerDefending = false;
@@ -21,7 +27,9 @@ public class BattleManager : MonoBehaviour
 
         UpdateAllUI();
 
-        SetLog("í“¬ŠJnI");
+        SetLog("æˆ¦é—˜é–‹å§‹ï¼");
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void SetLog(string message)
@@ -39,6 +47,11 @@ public class BattleManager : MonoBehaviour
 
         isPlayerDefending = false;
 
+        // ğŸ”Š æ”»æ’ƒSE
+        if (audioSource != null && attack != null)
+            audioSource.PlayOneShot(attack);
+
+
         int bonus = (playerStatus.Data.AttackWeapon != null) ? playerStatus.Data.AttackWeapon.Power : 0;
         int damage = Mathf.Max(1, (playerStatus.Data.AttackPower + bonus) - enemyStatus.Data.DefensePower);
 
@@ -47,11 +60,11 @@ public class BattleManager : MonoBehaviour
 
         UpdateAllUI();
 
-        SetLog($"ƒvƒŒƒCƒ„[‚ÌUŒ‚I “G‚É {damage} ‚Ìƒ_ƒ[ƒW‚ğ—^‚¦‚½I");
+        SetLog($"ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ”»æ’ƒï¼ æ•µã« {damage} ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä¸ãˆãŸï¼");
 
         if (enemyStatus.Data.HP <= 0)
         {
-            SetLog("Ÿ—˜I");
+            SetLog("å‹åˆ©ï¼");
             Invoke("LoadClearScene", 1.0f);
         }
         else
@@ -62,11 +75,42 @@ public class BattleManager : MonoBehaviour
 
     public void OnDefenseButton()
     {
-
-        SetLog("ƒvƒŒƒCƒ„[‚Íg‚ğŒì‚Á‚Ä‚¢‚é...");
+        audioSource.PlayOneShot(guard);
+        SetLog("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¯èº«ã‚’è­·ã£ã¦ã„ã‚‹...");
         isPlayerDefending = true;
         Invoke("ExecuteEnemyTurn", 1.0f);
     }
+
+    public void OnHealButton()
+    {
+        Debug.Log("â˜…â˜… å›å¾©ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸ â˜…â˜…");
+
+        if (playerStatus == null) return;
+
+        int healAmount = 20;
+
+        playerStatus.Data.HP += healAmount;
+        if (playerStatus.Data.HP > playerStatus.Data.MaxHP)
+        {
+            playerStatus.Data.HP = playerStatus.Data.MaxHP;
+        }
+
+        // ğŸ”Š å›å¾©SE
+        if (audioSource != null && heal != null)
+            audioSource.PlayOneShot(heal);
+
+        UpdateAllUI();
+
+        SetLog($"ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¯å›å¾©ã—ãŸï¼ HPãŒ {healAmount} å›å¾©ã—ãŸï¼");
+
+        // å›å¾©å¾Œã¯æ•µã®ã‚¿ãƒ¼ãƒ³ã¸
+        Invoke("ExecuteEnemyTurn", 1.0f);
+    }
+
+
+
+
+
 
     void ExecuteEnemyTurn()
     {
@@ -81,15 +125,15 @@ public class BattleManager : MonoBehaviour
         {
             case 0:
                 damage = Mathf.Max(1, enemyStatus.Data.AttackPower - playerStatus.Data.DefensePower);
-                attackName = "’ÊíUŒ‚";
+                attackName = "é€šå¸¸æ”»æ’ƒ";
                 break;
             case 1:
                 damage = Mathf.Max(1, (int)(enemyStatus.Data.AttackPower * 1.5f) - playerStatus.Data.DefensePower);
-                attackName = "‹­—ó‚ÈˆêŒ‚";
+                attackName = "å¼·çƒˆãªä¸€æ’ƒ";
                 break;
             case 2:
                 damage = 10;
-                attackName = "ŠÑ’Êƒr[ƒ€";
+                attackName = "è²«é€šãƒ“ãƒ¼ãƒ ";
                 break;
         }
 
@@ -97,25 +141,33 @@ public class BattleManager : MonoBehaviour
         {
             damage /= 2;
 
-            SetLog($"–hŒä¬Œ÷I {attackName} ‚ğŒyŒ¸‚µA{damage} ‚Ìƒ_ƒ[ƒW‚É—}‚¦‚½I");
+            SetLog($"é˜²å¾¡æˆåŠŸï¼ {attackName} ã‚’è»½æ¸›ã—ã€{damage} ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã«æŠ‘ãˆãŸï¼");
             isPlayerDefending = false;
         }
         else
         {
 
-            SetLog($"“G‚Ì {attackName}I {damage} ‚Ìƒ_ƒ[ƒW‚ğó‚¯‚½I");
+            SetLog($"æ•µã® {attackName}ï¼ {damage} ã®ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ãŸï¼");
         }
 
         playerStatus.Data.HP -= damage;
         if (playerStatus.Data.HP < 0) playerStatus.Data.HP = 0;
 
+        // ğŸ”Š è¢«ãƒ€ãƒ¡ãƒ¼ã‚¸SE
+        if (!isPlayerDefending && audioSource != null && damage > 0)
+        {
+            audioSource.PlayOneShot(this.damage);
+        }
+
         UpdateAllUI();
 
         if (playerStatus.Data.HP <= 0)
         {
-            SetLog("”s–k‚µ‚Ä‚µ‚Ü‚Á‚½...");
+            SetLog("æ•—åŒ—ã—ã¦ã—ã¾ã£ãŸ...");
             Invoke("LoadOverScene", 1.0f);
         }
+
+
     }
 
     void UpdateAllUI()
