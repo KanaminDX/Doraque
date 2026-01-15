@@ -13837,7 +13837,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &1524534931
@@ -17679,6 +17679,26 @@ PrefabInstance:
     - target: {fileID: 3739227123030837531, guid: bd0b77609b613244b88625654b39551f, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739227123030837531, guid: bd0b77609b613244b88625654b39551f, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739227123030837531, guid: bd0b77609b613244b88625654b39551f, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739227123030837531, guid: bd0b77609b613244b88625654b39551f, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739227123030837531, guid: bd0b77609b613244b88625654b39551f, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 3739227123030837531, guid: bd0b77609b613244b88625654b39551f, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 5301893549091178175, guid: bd0b77609b613244b88625654b39551f, type: 3}
       propertyPath: atText
